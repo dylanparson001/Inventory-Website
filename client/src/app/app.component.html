@@ -1,0 +1,16 @@
+<h1>{{ title }}</h1>
+
+<h2>Inventory List:</h2>
+<ul *ngFor="let item of items">
+  {{
+    item.id
+  }}
+  -
+  {{
+    item.name
+  }}
+  -
+  {{
+    item.description
+  }}
+</ul>
