@@ -8,6 +8,9 @@ namespace API.Dtos
 {
     public class ItemDto
     {
+        public int Id { get; set; }
+        
+        
         [Required]
         public string Name { get; set; }
         [Required]

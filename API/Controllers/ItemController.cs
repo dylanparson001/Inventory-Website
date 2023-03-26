@@ -38,6 +38,7 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
+        
             var item = new Item
             {
                 Name = itemDto.Name.ToUpper(),
@@ -45,7 +46,6 @@ namespace API.Controllers
                 Condition = itemDto.Condition,
                 Description = itemDto.Description
             };
-
             await _context.Items.AddAsync(item);
             await _context.SaveChangesAsync();
 
