@@ -6,3 +6,17 @@ app-new-item{
     width: 75%;
     margin: 0 auto;
 }
+
+.item-table{
+    margin: 0 auto;
+    width: 75vw;
+}
+
+
+.table-buttons{
+    margin: 4% auto;
+  }
+  
+  .table-buttons button{
+    margin: 0 4% 0 0;
+  }

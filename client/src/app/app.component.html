@@ -1,7 +1,21 @@
 <h1 class="h1">{{ title }}</h1>
 
-<app-item-table *ngIf="newItem === false"></app-item-table>
-<button  class ="btn btn-primary" (click)="showNewForm()" *ngIf="newItem === false">New Item</button>
-<app-new-item-form *ngIf="newItem === true"></app-new-item-form>
-<!-- Very crude, but neat that i got it to remove form and show form, will tweak and make it better -->
-<button *ngIf="newItem === true" (click)="showNewForm()" class="btn btn-secondary">Cancel</button> 
+<div class="item-table">
+  <app-item-table *ngIf="newItem === false"></app-item-table>
+  <div class="table-buttons">
+    <button
+      class="btn btn-primary"
+      (click)="showNewForm()"
+      *ngIf="newItem === false"
+    >
+      New Item
+    </button>
+    <!-- <button *ngIf="newItem === false" class="btn btn-danger">Delete</button> -->
+  </div>
+</div>
+
+<app-new-item-form
+  [showNewForm]
+  (formCancelled)="showNewForm()"
+  *ngIf="newItem === true"
+></app-new-item-form>

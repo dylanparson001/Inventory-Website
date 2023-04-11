@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -9,14 +9,11 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit {
   title = 'Inventory';
   items: any;
-  newItem: boolean = false;
-
+  @Output() newItem: boolean = false;
   constructor(private http: HttpClient) {}
 
-  showNewForm(){
-   this.newItem = !this.newItem; 
-   console.log(this.newItem);
-     
+  showNewForm() {
+    this.newItem = !this.newItem;
   }
 
   ngOnInit(): void {
@@ -25,7 +22,5 @@ export class AppComponent implements OnInit {
       error: (error) => console.log(error),
       complete: () => console.log('Request has completed'),
     });
-
-    
   }
 }

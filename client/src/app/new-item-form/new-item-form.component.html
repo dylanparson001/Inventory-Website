@@ -1,46 +1,60 @@
 <div class="container">
-    <h2>New Item</h2>
+  <h2>New Item</h2>
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <form (ngSubmit)="onSubmit()" #form="ngForm">
         <div class="item-data">
           <div class="form-group">
             <label for="name">Name</label>
-            <input 
-                type="text"
-                id="item-name"
-                class="form-control"
-                ngModel
-                name="name"
-                required
-                />
-                <!-- <span class="help-block" *ngIf="!name.isValid && name.isTouched">Please enter a name</span> -->
+            <input
+              type="text"
+              id="item-name"
+              class="form-control"
+              ngModel
+              name="name"
+              required
+            />
+            <!-- <span class="help-block" *ngIf="!form.valid && form.touched">Please enter a name</span> -->
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <input 
-                type="text"
-                id="item-description"
-                class="form-control"
-                ngModel
-                name="description"
-                required
-                />
+            <input
+              type="text"
+              id="item-description"
+              class="form-control"
+              ngModel
+              name="description"
+              required
+            />
           </div>
         </div>
         <div class="form-group">
-            <label for="condition">Condition</label>
-            <select id="condition" class="form-control" ngModel name="condition">
-                <option value="new">New</option>
-                <option value="used">Used</option>
-                <option value="repair">Needs Repair</option>
-                <option value="broken">Broken</option>
-                required
-              </select>
-          </div>
-          <button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
-            Save
+          <label for="condition">Condition</label>
+          <select
+            id="condition"
+            class="form-control"
+            [ngModel]="defaultCondition"
+            name="condition"
+            required
+          >
+            <option value=""></option>
+            <option value="new">New</option>
+            <option value="used">Used</option>
+            <option value="repair">Needs Repair</option>
+            <option value="broken">Broken</option>
+          </select>
+        </div>
+        <div class="form-buttons">
+          <button
+            [disabled]="!form.valid"
+            [ngClass]="{ 'btn-outline-success': !form.valid }"
+            class="btn btn-success"
+            type="submit"
+          >
+            Submit
           </button>
+          <button class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
