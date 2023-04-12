@@ -1,5 +1,9 @@
-button{
-    margin: 0 5%;
+:root {
+  --even-item-color: #f00000;
+}
+
+button {
+  margin: 0 5%;
 }
 .new {
   background-color: green;
@@ -10,7 +14,18 @@ button{
   color: white;
 }
 
-.table{
+.table {
   width: 75vw;
-margin: 0 auto;
+  margin: 0 auto;
+}
+
+.table-body{
+  color: #000000;
+}
+.table-items:nth-child(even) {
+  /* background-color: rgb(156, 185, 193); */
+}
+
+.table-header{
+  background-color: #ebebeb;
 }

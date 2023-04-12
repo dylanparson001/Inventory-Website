@@ -1,5 +1,5 @@
-<table class="table">
-  <thead>
+<table class="table border border-dark">
+  <thead class="table-header">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
@@ -7,8 +7,8 @@
       <th scope="col">Condition</th>
     </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let item of items">
+  <tbody class="table-body">
+    <tr *ngFor="let item of items" class="table-items">
       <th scope="row">{{ item.id }}</th>
       <td>{{ item.name }}</td>
       <td>{{ item.condition }}</td>
@@ -16,17 +16,3 @@
     </tr>
   </tbody>
 </table>
-
-<!-- <app-button [text]="newItemButton"></app-button> -->
-<!-- <app-button
-  
-  [text]="deleteItemButton"
-></app-button> -->
-<!-- <button [ngClass]="{
-  new: newItemButton== 'New Item'
-}"> New Item</button>
-<button class="new">New</button>
-
-<button [ngClass]="{
-  delete: deleteItemButton === 'Delete Item'
-}"> Delete Item</button> -->

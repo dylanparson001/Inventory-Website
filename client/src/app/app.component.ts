@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'Inventory';
+  title = 'Onyx Solutions';
   items: any;
   @Output() newItem: boolean = false;
   constructor(private http: HttpClient) {}

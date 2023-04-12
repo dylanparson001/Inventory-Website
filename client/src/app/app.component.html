@@ -1,18 +1,30 @@
-<h1 class="h1">{{ title }}</h1>
+<div class="title">
+  <img
+    class="title-logo"
+    src="../assets/Logo/OnyxLogo.png"
+    alt="Onyx Solutions Logo"
+  />
+  <h1 class="h1">{{ title }}</h1>
+</div>
 
-<div class="item-table">
-  <app-item-table *ngIf="newItem === false"></app-item-table>
-  <div class="table-buttons">
-    <button
-      class="btn btn-primary"
-      (click)="showNewForm()"
-      *ngIf="newItem === false"
-    >
-      New Item
-    </button>
-    <!-- <button *ngIf="newItem === false" class="btn btn-danger">Delete</button> -->
+<div class="home-container">
+  <h2>Inventory Management</h2>
+  <div class="home">
+    <div class="home-table border border-dark" *ngIf="newItem === false">
+      <app-item-table></app-item-table>
+    </div>
+    <div class="table-buttons">
+      <button
+        class="btn btn-primary"
+        (click)="showNewForm()"
+        *ngIf="newItem === false"
+      >
+        New Item
+      </button>
+    </div>
   </div>
 </div>
+<!-- <button *ngIf="newItem === false" class="btn btn-danger">Delete</button> -->
 
 <app-new-item-form
   [showNewForm]

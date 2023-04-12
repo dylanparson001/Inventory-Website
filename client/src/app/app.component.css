@@ -1,22 +1,68 @@
-app-new-item{
-    display: none;
-}
 
-.h1{
+app-new-item {
+  display: none;
+}
+.title{
+    display: flex;
+    flex-direction: row;
     width: 75%;
     margin: 0 auto;
 }
+.title-logo{
+    height: 5%;
+    width: 5%;
+    margin: 0 5px 0 0;
+}
 
-.item-table{
-    margin: 0 auto;
-    width: 75vw;
+.home{
+  margin: 2% auto;
+}
+
+.home-container{
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+}
+
+.home-table {
+  margin: 0 auto;
+  width: 75vw;
+  height: 53vh;
+  overflow: auto;
+  overflow-x: hidden;
+  border: 5px;
 }
 
 
-.table-buttons{
-    margin: 4% auto;
-  }
-  
-  .table-buttons button{
-    margin: 0 4% 0 0;
-  }
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* .home-table::-webkit-scrollbar {
+    overflow: hidden;
+} */
+
+.table-buttons {
+  margin: 4% 0%;
+}
+
+.table-buttons button {
+  margin: 0 4% 0 0;
+}
