@@ -37,11 +37,14 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            if(itemDto.Quantity < 0){
+                return BadRequest("Quantity Cannot Be Negative");
+            }
 
-        
             var item = new Item
             {
                 Name = itemDto.Name.ToUpper(),
+                Quantity = itemDto.Quantity,
                 Category = itemDto.Category.ToUpper(),
                 Condition = itemDto.Condition,
                 Description = itemDto.Description
@@ -68,6 +71,7 @@ namespace API.Controllers
             {
                 Id = itemId,
                 Name = updatedItem.Name.ToUpper(),
+                Quantity = updatedItem.Quantity,
                 Category = updatedItem.Category.ToUpper(),
                 Condition = updatedItem.Condition,
                 Description = updatedItem.Description

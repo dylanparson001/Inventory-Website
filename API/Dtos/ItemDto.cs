@@ -14,6 +14,8 @@ namespace API.Dtos
         [Required]
         public string Name { get; set; }
         [Required]
+        public int Quantity { get; set; }
+        [Required]
         public string Category { get; set; }
         public string Condition { get; set; }
         public string Description { get; set; }

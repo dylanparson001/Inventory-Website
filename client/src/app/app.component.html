@@ -21,10 +21,10 @@
       >
         New Item
       </button>
+      <button *ngIf="newItem === false" class="btn btn-danger">Delete</button>
     </div>
   </div>
 </div>
-<!-- <button *ngIf="newItem === false" class="btn btn-danger">Delete</button> -->
 
 <app-new-item-form
   [showNewForm]

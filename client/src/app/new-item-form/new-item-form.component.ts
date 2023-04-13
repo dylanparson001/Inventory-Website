@@ -1,4 +1,9 @@
 import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpResponse,
+} from '@angular/common/http';
+import {
   Component,
   EventEmitter,
   Input,
@@ -15,21 +20,34 @@ import { NgForm } from '@angular/forms';
 })
 export class NewItemFormComponent implements OnInit {
   defaultCondition: any = '';
-  @Output() formCancelled = new EventEmitter<boolean>;
+  defaultQuantity: number = 1;
+  successfullySubmitted: boolean = false;
+
+  @Output() formCancelled = new EventEmitter<boolean>();
   @ViewChild('form') newItemForm: NgForm | undefined;
   @Input() showNewForm: any;
   @Input() newItem: boolean | undefined;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
+
   ngOnInit(): void {}
-  onSubmit() {
-    console.log(this.newItemForm?.value.name);
+
+  onCreateItem(itemData: {
+    name: string;
+    category: string;
+    condition: string;
+    description: string;
+  }) {
+    console.log(itemData);
+    this.http
+      .post('https://localhost:5001/Item/additem', itemData)
+      .subscribe((responseData) => {
+        console.log(responseData);
+      });
   }
 
-  onCancel(){
+  onCancel() {
     this.formCancelled.emit(true);
     console.log('Cancel');
-    
   }
-
 }
