@@ -8,20 +8,29 @@
 </div>
 
 <div class="home-container">
-  <h2>Inventory Management</h2>
+  <h2>Inventory Manager</h2>
   <div class="home">
-    <div class="home-table border border-dark" *ngIf="newItem === false">
-      <app-item-table></app-item-table>
+    <div
+      class="home-table border border-dark"
+      *ngIf="newItem === false && deleteItem === false"
+    >
+      <app-item-table [getItems]="getItems"></app-item-table>
     </div>
     <div class="table-buttons">
       <button
         class="btn btn-primary"
         (click)="showNewForm()"
-        *ngIf="newItem === false"
+        *ngIf="newItem === false && deleteItem === false"
       >
         New Item
       </button>
-      <button *ngIf="newItem === false" class="btn btn-danger">Delete</button>
+      <button
+        *ngIf="newItem === false && deleteItem === false"
+        class="btn btn-danger"
+        (click)="showDeleteItem()"
+      >
+        Delete
+      </button>
     </div>
   </div>
 </div>
@@ -31,3 +40,8 @@
   (formCancelled)="showNewForm()"
   *ngIf="newItem === true"
 ></app-new-item-form>
+
+<app-delete-item-table
+  *ngIf="deleteItem === true"
+  [getItems]="getItems"
+></app-delete-item-table>

@@ -23,13 +23,7 @@ namespace API.Controllers
 
             return items;
         }
-        [HttpGet("getitem/{id}")]
-        public async Task<ActionResult<Item>> GetItem(int id)
-        {
-            var item = await _context.Items.FindAsync(id);
 
-            return item;
-        }
         [HttpPost("additem")]
         public async Task<ActionResult<Item>> AddItem([FromBody] ItemDto itemDto)
         {
@@ -37,7 +31,8 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if(itemDto.Quantity < 0){
+            if (itemDto.Quantity < 0)
+            {
                 return BadRequest("Quantity Cannot Be Negative");
             }
 
@@ -83,19 +78,25 @@ namespace API.Controllers
 
             return Ok("Successfully Updated");
         }
-        [HttpDelete("deleteitem")]
-        public async Task<ActionResult<Item>> DeleteItem(int itemId)
+        [HttpGet("getitem/{id}")]
+        public async Task<ActionResult<Item>> GetItem(int id)
         {
-            if (ItemExists(itemId) == null)
-            {
-                return BadRequest(ModelState);
-            }
+            var item = await _context.Items.FindAsync(id);
 
-            var item = _context.Items.FirstOrDefault(x => x.Id == itemId);
+            return item;
+        }
+
+        [HttpDelete("deleteitem/{id}")]
+        public async Task<ActionResult<Item>> DeleteItem(int id)
+        {
+            // if (!await ItemExists(id))
+            // {
+            //     return BadRequest(ModelState);
+            // }
+            var item = await _context.Items.FindAsync(id); // Was using firstordefault, but that wasnt working for some reason?
 
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
-
             return Ok("Item Deleted");
         }
         private async Task<bool> ItemExists(int id)

@@ -8,19 +8,30 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   title = 'Onyx Solutions';
-  items: any;
+  @Output() items: any;
   @Output() newItem: boolean = false;
+  @Output() deleteItem: boolean = false;
+  @Output() showTable: boolean = true;
+
   constructor(private http: HttpClient) {}
 
   showNewForm() {
     this.newItem = !this.newItem;
   }
 
-  ngOnInit(): void {
+  showDeleteItem(){
+    this.deleteItem = !this.deleteItem;
+  }
+
+  @Output() getItems() {
     this.http.get('https://localhost:5001/Item/getitems').subscribe({
       next: (response) => (this.items = response),
       error: (error) => console.log(error),
       complete: () => console.log('Request has completed'),
     });
+  }
+
+  ngOnInit(): void {
+    this.getItems();
   }
 }
