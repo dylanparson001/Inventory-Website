@@ -31,11 +31,12 @@ export class DeleteItemTableComponent implements OnInit {
   }
 
   onDelete() {
-    let t = this.items
+    this.itemSelected = this.items
       .filter((opt: { checked: any }) => opt.checked)
-      .map((opt: any) => opt);
-    this.itemSelected = t;
-    let selectedId: number = this.itemSelected[0].id;
+      .map((opt: any) => opt); // puts items that were checked in form to an array
+
+    let selectedId: number = this.itemSelected[0].id; // Only picking the ""first"" one, API does not have functionality to delete multiple items at once.
+    
     console.log(selectedId);
 
     this.http

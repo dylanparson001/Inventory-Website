@@ -1,4 +1,4 @@
-# Basic inventory keeping website
+# Full Stack Inventory Management Web App
 
 ## Description:
 
@@ -13,7 +13,3 @@
      - SQL Server 2018
      - Entity Framework
 
-### Features to be added:
-
-    - Filtering list, example: Show items whos name is only "Hammer" or condition of "bad"
-    - User/Employee login
