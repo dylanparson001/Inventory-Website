@@ -99,6 +99,18 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return Ok("Item Deleted");
         }
+
+        [HttpDelete("deleteitem/selected")]
+        public async Task<IActionResult> DeleteItems(List<int> ids)
+        {
+
+            var itemsToDelete = await _context.Items.Where(i => ids.Contains(i.Id)).ToListAsync();
+            _context.Items.RemoveRange(itemsToDelete);
+            await _context.SaveChangesAsync();
+
+
+            return NoContent(); // 204 No Content
+        }
         private async Task<bool> ItemExists(int id)
         {
             return await _context.Items.AnyAsync(x => x.Id == id);

@@ -36,12 +36,13 @@
 </div>
 
 <app-new-item-form
+  *ngIf="newItem === true"
   [showNewForm]
   (formCancelled)="showNewForm()"
-  *ngIf="newItem === true"
 ></app-new-item-form>
 
 <app-delete-item-table
   *ngIf="deleteItem === true"
   [getItems]="getItems"
+  (formCancelled)="showDeleteItem()"
 ></app-delete-item-table>

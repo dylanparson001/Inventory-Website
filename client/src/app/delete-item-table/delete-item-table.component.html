@@ -2,16 +2,16 @@
   <h2>New Item</h2>
   <div class="home-table">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form #form="ngForm" (ngSubmit)="onDelete()">
+      <form #form="ngForm" (ngSubmit)="deleteSelected()">
         <div class="item-data">
           <div class="form-group">
+            <input type ="checkbox" (click)="CheckAllOptions()">Select All
             <div *ngFor="let item of items">
               <input
                 #itemCheckbox
+                [(ngModel)]="item.selected"
                 type="checkbox"
                 name="item"
-                [checked]="item.checked"
-                (change)="item.checked = !item.checked"
               />
               <label for="name">{{ item.id }}</label>
             </div>
@@ -20,7 +20,7 @@
       </form>
     </div>
   </div>
-  <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+  <button class="btn btn-danger" (click)="deleteSelected()">Delete</button>
   <button class="btn btn-secondary" (click)="onCancel()">Cancel</button>
 </div>
 
