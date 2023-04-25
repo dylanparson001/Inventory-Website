@@ -16,6 +16,15 @@ namespace API.Controllers
             _context = context;
 
         }
+
+        [HttpGet("getitem/{id}")]
+        public async Task<ActionResult<Item>> GetItem(int id)
+        {
+            var item = await _context.Items.FindAsync(id);
+
+            return item;
+        }
+
         [HttpGet("getitems")]
         public async Task<ActionResult<IEnumerable<Item>>> GetItems()
         {
@@ -25,74 +34,61 @@ namespace API.Controllers
         }
 
         [HttpPost("additem")]
-        public async Task<ActionResult<Item>> AddItem([FromBody] ItemDto itemDto)
+        public async Task<ActionResult<Item>> AddItem([FromBody] Item item)
         {
-            if (itemDto == null)
+            if (item == null)
             {
                 return BadRequest(ModelState);
             }
-            if (itemDto.Quantity < 0)
+            if (item.Quantity < 0)
             {
                 return BadRequest("Quantity Cannot Be Negative");
             }
-
-            var item = new Item
+            
+            if (await ItemNameExists(item.Name) == true)
             {
-                Name = itemDto.Name.ToUpper(),
-                Quantity = itemDto.Quantity,
-                Category = itemDto.Category.ToUpper(),
-                Condition = itemDto.Condition,
-                Description = itemDto.Description
-            };
-            await _context.Items.AddAsync(item);
-            await _context.SaveChangesAsync();
+                Item existingItem = await GetItemByName(item.Name);
+                
+                item.Id = existingItem.Id;
 
-            return Ok("Successfully Created");
+                await UpdateItem(item);
+                
+            }
+            else {
+                var newItem = new Item
+                {
+                    Name = item.Name.ToUpper(),
+                    Quantity = item.Quantity,
+                    Category = item.Category,
+                    Condition = item.Condition,
+                    Description = item.Description
+                };
+                await _context.Items.AddAsync(newItem);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
         }
 
         [HttpPut("updateitem")]
-        public async Task<ActionResult<Item>> UpdateItem(int itemId, [FromBody] ItemDto updatedItem)
+        public async Task<ActionResult<Item>> UpdateItem([FromBody] Item updatedItem)
         {
             if (updatedItem == null)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!await ItemExists(itemId))
-            {
-                return BadRequest(ModelState);
-            }
-            var item = new Item
-            {
-                Id = itemId,
-                Name = updatedItem.Name.ToUpper(),
-                Quantity = updatedItem.Quantity,
-                Category = updatedItem.Category.ToUpper(),
-                Condition = updatedItem.Condition,
-                Description = updatedItem.Description
-            };
-
-            _context.Items.Update(item);
+            _context.Items.Update(updatedItem);
 
             await _context.SaveChangesAsync();
 
-            return Ok("Successfully Updated");
+            return NoContent();
         }
-        [HttpGet("getitem/{id}")]
-        public async Task<ActionResult<Item>> GetItem(int id)
-        {
-            var item = await _context.Items.FindAsync(id);
-
-            return item;
-        }
+ 
 
         [HttpDelete("deleteitem/{id}")]
         public async Task<ActionResult<Item>> DeleteItem(int id)
         {
-            // if (!await ItemExists(id))
-            // {
-            //     return BadRequest(ModelState);
-            // }
             var item = await _context.Items.FindAsync(id); // Was using firstordefault, but that wasnt working for some reason?
 
             _context.Items.Remove(item);
@@ -101,7 +97,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("deleteitem/selected")]
-        public async Task<IActionResult> DeleteItems(List<int> ids)
+        public async Task<IActionResult> DeleteItems([FromBody] List<int> ids)
         {
 
             var itemsToDelete = await _context.Items.Where(i => ids.Contains(i.Id)).ToListAsync();
@@ -114,6 +110,17 @@ namespace API.Controllers
         private async Task<bool> ItemExists(int id)
         {
             return await _context.Items.AnyAsync(x => x.Id == id);
+        }
+        private async Task<bool> ItemNameExists(string name)
+        {
+            return await _context.Items.AnyAsync(x => x.Name == name);
+        }
+        private async Task<Item> GetItemByName(string name){
+            
+            // Learned about as no tracking, EF tracks context for changes, and if im making a call that is meant to be temporary AsNotracking() stops the tracl
+            Item item = await _context.Items.AsNoTracking().FirstOrDefaultAsync(item => item.Name == name);
+
+            return item;
         }
 
     }

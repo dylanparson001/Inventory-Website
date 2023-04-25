@@ -30,7 +30,7 @@ export class DeleteItemTableComponent implements OnInit {
     this.getItems();
   }
 
-  CheckAllOptions() {
+  checkAllOptions() {
     if (this.items.every((val: { selected: boolean }) => val.selected == true))
       this.items.forEach((val: { selected: boolean }) => {
         val.selected = false;

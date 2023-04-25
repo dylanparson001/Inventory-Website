@@ -38,16 +38,12 @@ export class NewItemFormComponent implements OnInit {
     condition: string;
     description: string;
   }) {
-    console.log(itemData);
     this.http
       .post('https://localhost:5001/Item/additem', itemData)
-      .subscribe((responseData) => {
-        console.log(responseData);
-      });
+      .subscribe(() => {});
   }
 
   onCancel() {
     this.formCancelled.emit(true);
-    console.log('Cancel');
   }
 }
