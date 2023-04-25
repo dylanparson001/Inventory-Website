@@ -34,7 +34,7 @@ namespace API.Controllers
         }
 
         [HttpPost("additem")]
-        public async Task<ActionResult<Item>> AddItem([FromBody] Item item)
+        public async Task<ActionResult<Item>> AddItem([FromBody] ItemDto item)
         {
             if (item == null)
             {
@@ -44,20 +44,25 @@ namespace API.Controllers
             {
                 return BadRequest("Quantity Cannot Be Negative");
             }
-            
+
             if (await ItemNameExists(item.Name) == true)
             {
+                // Need to create item object because client does not send id 
                 Item existingItem = await GetItemByName(item.Name);
-                
+
+                // Assign id to item
                 item.Id = existingItem.Id;
 
+                // Update item
                 await UpdateItem(item);
-                
+
             }
-            else {
+            else
+            {
+                // Create new item
                 var newItem = new Item
                 {
-                    Name = item.Name.ToUpper(),
+                    Name = item.Name.ToUpper(), // names are uppercased here and in client to ensure data is uniform
                     Quantity = item.Quantity,
                     Category = item.Category,
                     Condition = item.Condition,
@@ -71,25 +76,35 @@ namespace API.Controllers
         }
 
         [HttpPut("updateitem")]
-        public async Task<ActionResult<Item>> UpdateItem([FromBody] Item updatedItem)
+        public async Task<ActionResult<Item>> UpdateItem([FromBody] ItemDto updatedItem)
         {
             if (updatedItem == null)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Items.Update(updatedItem);
+            var newItem = new Item
+            {
+                Id = updatedItem.Id,
+                Name = updatedItem.Name.ToUpper(), 
+                Quantity = updatedItem.Quantity,
+                Category = updatedItem.Category,
+                Condition = updatedItem.Condition,
+                Description = updatedItem.Description
+            };
+
+            _context.Items.Update(newItem);
 
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
- 
+
 
         [HttpDelete("deleteitem/{id}")]
         public async Task<ActionResult<Item>> DeleteItem(int id)
         {
-            var item = await _context.Items.FindAsync(id); // Was using firstordefault, but that wasnt working for some reason?
+            var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
 
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
@@ -115,8 +130,9 @@ namespace API.Controllers
         {
             return await _context.Items.AnyAsync(x => x.Name == name);
         }
-        private async Task<Item> GetItemByName(string name){
-            
+        private async Task<Item> GetItemByName(string name)
+        {
+
             // Learned about as no tracking, EF tracks context for changes, and if im making a call that is meant to be temporary AsNotracking() stops the tracl
             Item item = await _context.Items.AsNoTracking().FirstOrDefaultAsync(item => item.Name == name);
 

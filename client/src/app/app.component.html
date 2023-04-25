@@ -31,6 +31,14 @@
       >
         Delete
       </button>
+      
+      <button
+      *ngIf="newItem === false && deleteItem === false"
+      class="btn btn-secondary"
+      (click)="ngOnInit()">
+      Refresh List
+
+      </button>
     </div>
   </div>
 </div>

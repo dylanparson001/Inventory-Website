@@ -48,7 +48,7 @@ export class DeleteItemTableComponent implements OnInit {
 
     console.log(selectedIds);
 
-    const httpOptions = {
+    const httpOptions = { // in order to delete angular uses httpOptions in the call
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       body: selectedIds,
     };

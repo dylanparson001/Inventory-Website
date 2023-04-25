@@ -2,33 +2,60 @@
   <h2>Delete Item</h2>
   <div class="home-table">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <thead class="table-header">
+        
+      </thead>
       <form #form="ngForm" (ngSubmit)="deleteSelected()">
-        <div class="item-data">
-          <div class="form-group">
-            <input type ="checkbox" (click)="checkAllOptions()">Select All
-            <div *ngFor="let item of items">
-              <input
+          <table>
+            <thead class="table-header"></thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Condition</th>
+              <th scope="col">Description</th>
+            </tr>
+          <div class="item-data">
+            <div class="form-group">
+              <input type ="checkbox" (click)="checkAllOptions()">Select All
+              <div *ngFor="let item of items">
+                <input
                 [(ngModel)]="item.selected"
                 type="checkbox"
                 name="item"
-              />
-              <label for="name">{{ item.id }}</label>
+                />
+                <label for="name">{{ item.id }}</label>
+              </div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </table>
+        </form>
+      </div>
   </div>
   <button class="btn btn-danger" (click)="deleteSelected()">Delete</button>
   <button class="btn btn-secondary" (click)="onCancel()">Cancel</button>
 </div>
 
-<!-- onDeleteItem(form.value) -->
-<!-- <input
-#itemCheckbox
-type="checkbox"
-[checked]="saveValue"
-(change)="onDelete(itemCheckbox.checked)"
-/>
+<!-- <table class="table border border-dark">
+  <thead class="table-header">
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Condition</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody class="table-body">
+    <tr *ngFor="let item of items" class="table-items">
+      <th scope="row">{{ item.id }}</th>
+      <td>{{ item.name }}</td>
+      <td>{{item.quantity}}</td>
+      <td>{{ item.condition }}</td>
+      <td>{{ item.description }}</td>
+    </tr>
 
-<label for="name">{{ item.id }}</label> -->
+  </tbody>
+  <p *ngIf="isFetching === true">Loading...</p>
+</table> -->
+
