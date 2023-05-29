@@ -14,7 +14,6 @@ namespace API.Controllers
         public ItemController(DataContext context)
         {
             _context = context;
-
         }
 
         [HttpGet("getitem/{id}")]
@@ -44,7 +43,8 @@ namespace API.Controllers
             {
                 return BadRequest("Quantity Cannot Be Negative");
             }
-
+            // If the user enters a name that already exists, dont create a new item. 
+            // Might be good idea to prompt user in client to make sure they know they are updating instead of adding
             if (await ItemNameExists(item.Name) == true)
             {
                 // Need to create item object because client does not send id 
@@ -83,17 +83,17 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var newItem = new Item
+            var itemToUpdate = new Item
             {
                 Id = updatedItem.Id,
-                Name = updatedItem.Name.ToUpper(), 
+                Name = updatedItem.Name.ToUpper(),
                 Quantity = updatedItem.Quantity,
                 Category = updatedItem.Category,
                 Condition = updatedItem.Condition,
                 Description = updatedItem.Description
             };
 
-            _context.Items.Update(newItem);
+            _context.Items.Update(itemToUpdate);
 
             await _context.SaveChangesAsync();
 
@@ -108,33 +108,31 @@ namespace API.Controllers
 
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
-            return Ok("Item Deleted");
+            return NoContent();
         }
 
         [HttpDelete("deleteitem/selected")]
         public async Task<IActionResult> DeleteItems([FromBody] List<int> ids)
         {
-
             var itemsToDelete = await _context.Items.Where(i => ids.Contains(i.Id)).ToListAsync();
             _context.Items.RemoveRange(itemsToDelete);
             await _context.SaveChangesAsync();
 
-
-            return NoContent(); // 204 No Content
+            return NoContent();
         }
-        private async Task<bool> ItemExists(int id)
+        private async Task<bool> ItemExistsById(int id)
         {
-            return await _context.Items.AnyAsync(x => x.Id == id);
+            return await _context.Items.AsNoTracking().AnyAsync(x => x.Id == id);
         }
         private async Task<bool> ItemNameExists(string name)
         {
-            return await _context.Items.AnyAsync(x => x.Name == name);
+            return await _context.Items.AsNoTracking().AnyAsync(x => x.Name == name);
         }
         private async Task<Item> GetItemByName(string name)
         {
-
             // Learned about as no tracking, EF tracks context for changes, and if im making a call that is meant to be temporary AsNotracking() stops the tracl
-            Item item = await _context.Items.AsNoTracking().FirstOrDefaultAsync(item => item.Name == name);
+            Item item = await _context.Items.AsNoTracking()
+                .FirstOrDefaultAsync(item => item.Name == name);
 
             return item;
         }

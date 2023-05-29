@@ -1,0 +1,29 @@
+
+
+
+  
+  .home-table{
+    min-height: 55vh;
+
+  }
+  .form-buttons{
+    margin: 4% auto;
+  }
+  
+  .form-buttons button{
+    margin: 0 4% 0 0;
+  }
+  
+  input.ng-invalid.ng-touched,
+  select.ng-invalid.ng-touched {
+    border: 3px solid red;
+  }
+  
+  input.ng-valid.ng-touched,
+  select.ng-valid.ng-touched {
+    border: 3px solid green;
+  }
+
+  .table-items{
+    border: 1px black solid;
+  }

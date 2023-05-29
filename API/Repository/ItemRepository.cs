@@ -1,8 +1,9 @@
+using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Repository
 {
-    public class ItemRepository
+    public class ItemRepository : IItemRepository
     {
         private readonly DbContext _context;
         public ItemRepository(DbContext context)

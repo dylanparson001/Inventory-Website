@@ -7,6 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { ItemService } from '../_services/item.service';
 
 @Component({
   selector: 'app-delete-item-table',
@@ -24,7 +25,7 @@ export class DeleteItemTableComponent implements OnInit {
 
   @ViewChild('itemCheckbox') itemCheckbox: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private itemService: ItemService) {}
 
   ngOnInit(): void {
     this.getItems();
@@ -53,13 +54,19 @@ export class DeleteItemTableComponent implements OnInit {
       body: selectedIds,
     };
 
-    this.http
-      .delete('https://localhost:5001/Item/deleteitem/selected', httpOptions)
+      this.itemService.deleteItem(httpOptions)
       .subscribe(() => {
         this.getItems();
       });
   }
 
+  onCancel() {
+    this.formCancelled.emit(true);
+    console.log('Cancel');
+  }
+}
+
+// *****************************************************************************************************************************
   // Keeping here just to look at different method of deletion, but above implemntation covers this entirely
   // onDelete() {
   //   this.itemSelected = this.items
@@ -80,9 +87,3 @@ export class DeleteItemTableComponent implements OnInit {
 
   //   this.getItems();
   // }
-
-  onCancel() {
-    this.formCancelled.emit(true);
-    console.log('Cancel');
-  }
-}

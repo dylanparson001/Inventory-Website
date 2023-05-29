@@ -12,6 +12,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ItemService } from '../_services/item.service';
 
 @Component({
   selector: 'app-new-item-form',
@@ -28,7 +29,7 @@ export class NewItemFormComponent implements OnInit {
   @Input() showNewForm: any;
   @Input() newItem: boolean | undefined;
 
-  constructor(private http: HttpClient) {}
+  constructor(private itemService: ItemService) {}
 
   ngOnInit(): void {}
 
@@ -38,10 +39,11 @@ export class NewItemFormComponent implements OnInit {
     condition: string;
     description: string;
   }) {
-    this.http
-      .post('https://localhost:5001/Item/additem', itemData)
+    this.itemService.createItem(itemData)
       .subscribe(() => {});
+      this.newItemForm?.resetForm();
   }
+
 
   onCancel() {
     this.formCancelled.emit(true);

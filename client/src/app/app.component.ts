@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ItemService } from './_services/item.service';
 
 @Component({
   selector: 'app-root',
@@ -14,13 +15,17 @@ export class AppComponent implements OnInit {
   @Output() deleteItem: boolean = false;
   @Output() showTable: boolean = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(private itemService: ItemService, private http: HttpClient) {}
+
   // Called by on init, gets all items from api
   @Output() getItems() {
-    this.http.get('https://localhost:5001/Item/getitems').subscribe({
-      next: (response) => (this.items = response),
+    this.itemService.getItem().subscribe({
+      next: (response) =>{
+        this.items = response;
+        console.log(response);
+      },
       error: (error) => console.log(error),
-      complete: () => console.log('Request has completed'),
+      complete: () => console.log('Request has completed')
     });
   }
 

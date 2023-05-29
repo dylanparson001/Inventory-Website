@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ItemService } from '../_services/item.service';
 
 @Component({
   selector: 'app-item-table',
@@ -12,12 +13,11 @@ export class ItemTableComponent implements OnInit {
   newItemButton = 'New Item';
   deleteItemButton = 'Delete Item';
   isFetching: boolean = false;
-  
+
   @Input() getItems: any;
 
-
-  constructor(private http: HttpClient) {}
+  constructor(private itemService: ItemService) {}
   ngOnInit(): void {
-    this.getItems();
+    this.getItems()
   }
 }
