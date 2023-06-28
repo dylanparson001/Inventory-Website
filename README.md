@@ -1,6 +1,6 @@
 # Full Stack Inventory Management Web App
 
-<!-- ## [Video Demo](https://youtube.com/) -->
+## [Video Demo](https://youtu.be/QA3fyEYd3CA)
 
 ## Description:
 
