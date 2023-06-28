@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(opt =>
 {
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 }, ServiceLifetime.Scoped);
 
 var app = builder.Build();

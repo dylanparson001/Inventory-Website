@@ -8,7 +8,7 @@ import { ItemService } from './_services/item.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'Onyx Solutions';
+  title = 'Onyx Inventory Management';
   // Values to be sent to child components
   @Output() items: any;
   @Output() newItem: boolean = false;
